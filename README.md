@@ -3,9 +3,9 @@ Frontend system from money lover clone application
 
 # Tech stack
 - Next Js
-- Prisma ORM
 - Typescript
 - Tailwind CSS
+- Radix UI (Shadcn)
 
 # How to run
 - clone this repo and `run npm install`
