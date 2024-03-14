@@ -43,7 +43,9 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between h-10"
+          className={cn("w-[200px] justify-between h-10", {
+            "text-slate-500 font-normal": !selected,
+          })}
         >
           {selected
             ? options.find((option) => option?.value === selected.value)?.label

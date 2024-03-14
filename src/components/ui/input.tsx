@@ -52,6 +52,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           className={cn(
             // base style
+            "placeholder:text-slate-500",
             "form-input w-full rounded-md text-gray-800",
             "focus:border-primary-500 focus:outline-none focus:ring-primary-500 focus:ring-opacity-25",
 
