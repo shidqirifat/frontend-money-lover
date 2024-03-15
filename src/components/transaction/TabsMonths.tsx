@@ -1,7 +1,7 @@
 import { getCurrentMonth, getNextMonth, getPrevMonth } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TabMonthProps = {
   children: string;
