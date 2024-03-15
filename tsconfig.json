@@ -15,7 +15,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/ui/*": ["./src/components/ui/*"]
-    }
+    },
+    "noUnusedParameters": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

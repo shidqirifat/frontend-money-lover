@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className={inter.className}>
       <Header />
-      {children}
+      <main className="max-w-lg mx-auto">{children}</main>
     </div>
   );
 }
