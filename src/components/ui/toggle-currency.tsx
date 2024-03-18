@@ -20,7 +20,7 @@ export default function ToggleCurrency({ balance }: ToggleCurrencyProps) {
   return (
     <div className="flex items-center gap-2">
       <h2 className="font-bold text-base text-green-500 leading-5">
-        Rp {hideBalance ? "*".repeat(10) : formatCurrency(balance)}
+        {hideBalance ? `Rp ${"*".repeat(10)}` : formatCurrency(balance)}
       </h2>
       <Toggle
         onClick={toggleHideBalance}

@@ -28,15 +28,15 @@ export default function Summary() {
     <div className="space-y-2 p-4">
       <div className="flex items-center justify-between">
         <Label>Inflow</Label>
-        <Value type="inflow">{`Rp ${formatCurrency(6_000_000)}`}</Value>
+        <Value type="inflow">{formatCurrency(6_000_000)}</Value>
       </div>
       <div className="flex items-center justify-between">
         <Label>Outflow</Label>
-        <Value type="outflow">{`-Rp ${formatCurrency(2_000_000)}`}</Value>
+        <Value type="outflow">{formatCurrency(-2_000_000)}</Value>
       </div>
       <div className="ml-auto border-t border-slate-300 pt-1 w-36">
         <h2 className="text-slate-600 text-right text-base font-medium leading-5">
-          {`+Rp ${formatCurrency(4_000_000)}`}
+          +{formatCurrency(4_000_000)}
         </h2>
       </div>
     </div>
