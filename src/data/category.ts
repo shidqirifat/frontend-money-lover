@@ -13,10 +13,10 @@ export const CATEGORIES = [
   },
   {
     label: "Sallary",
-    value: "4",
+    value: "5",
   },
   {
     label: "Side Hustle",
-    value: "5",
+    value: "6",
   },
 ];

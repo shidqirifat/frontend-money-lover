@@ -67,7 +67,7 @@ export default function DayTransactions({
 
             <div>
               <div className="grid grid-cols-[1fr_120px]">
-                <h2 className="text-slate-700 font-medium leading-5 text-base">
+                <h2 className="text-slate-700 font-medium leading-5 text-sm">
                   {transaction.sub_category
                     ? transaction.sub_category.name
                     : transaction.category.name}
@@ -80,7 +80,7 @@ export default function DayTransactions({
                   {formatCurrency(transaction.amount)}
                 </h2>
               </div>
-              <h3 className="text-sm text-slate-500 font-normal leading-5 truncate max-w-[360px]">
+              <h3 className="text-xs text-slate-500 font-normal leading-5 truncate max-w-[360px]">
                 {transaction.description}
               </h3>
             </div>

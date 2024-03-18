@@ -46,8 +46,7 @@ export const TRANSACTIONS = [
   {
     id: 5,
     amount: 1000000,
-    description:
-      "Makan mie ayam yang wkkkkkkkk banyaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+    description: "Gaji bulanan",
     date: "2024-03-18T14:48:00.000Z",
     master_category_transaction: {
       id: 2,

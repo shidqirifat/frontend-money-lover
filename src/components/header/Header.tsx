@@ -1,12 +1,12 @@
 import { CATEGORIES } from "@/data/category";
 import DisplayBalance from "./DisplayBalance";
 import { Button } from "@/ui/button";
-import { Combobox, Option } from "@/ui/combobox";
+import { Combobox } from "@/ui/combobox";
 import { InputSearch } from "@/ui/input-search";
 import { Logo } from "@/ui/logo";
 import { Separator } from "@/ui/separator";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import useFilter from "@/stores/filter";
 
 type ClearCategoryProps = { onClick: () => void };
 
@@ -23,10 +23,8 @@ const ClearCategory = ({ onClick }: ClearCategoryProps) => {
 };
 
 export default function Header() {
-  const [category, setCategory] = useState<Option>(null);
-  const [keyword, setKeyword] = useState("");
-
-  const clearCategory = () => setCategory(null);
+  const { category, keyword, setCategory, clearCategory, setKeyword } =
+    useFilter();
 
   return (
     <header className="py-4 px-6 flex justify-between items-center bg-white shadow">
