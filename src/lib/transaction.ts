@@ -1,4 +1,7 @@
 import dayjs from "dayjs";
+import { z } from "zod";
+import { toDatalist } from "./datalist";
+import { WALLETS } from "@/data/wallet";
 
 type Entity = {
   id: number;
@@ -62,3 +65,34 @@ export const toDayTransactions = (
 
   return dayTransactions;
 };
+
+const generateOptionSchema = (params?: z.RawCreateParams) => {
+  return z.object({ label: z.string(), value: z.number() }, params);
+};
+
+export const formTransactionSchema = z.object({
+  amount: z
+    .string()
+    .regex(/^[\d.]+$/, {
+      message: "Only numbers is allowed.",
+    })
+    .refine((value) => value !== "0", { message: "Amount cannot be zero" }),
+  description: z.string(),
+  date: z.string().datetime(),
+  wallet: generateOptionSchema(),
+  category: generateOptionSchema({ required_error: "Category is required" }),
+  subCategory: generateOptionSchema().nullable(),
+});
+
+export type TFormTransaction = z.infer<typeof formTransactionSchema>;
+
+export const generateDefaultValueFormTransaction =
+  (): Partial<TFormTransaction> => {
+    return {
+      amount: "0",
+      description: "",
+      date: dayjs().toISOString(),
+      wallet: toDatalist(WALLETS)[0],
+      subCategory: null,
+    };
+  };
