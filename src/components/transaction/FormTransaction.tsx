@@ -22,6 +22,7 @@ import {
   formTransactionSchema,
   generateDefaultValueFormTransaction,
 } from "@/lib/transaction";
+import { DatePicker } from "../ui/date-picker";
 
 type FormTransactionProps = {
   openModal: boolean;
@@ -87,20 +88,6 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
 
         <FormField
           control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Write note" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="category"
           render={({ field }) => (
             <FormItem>
@@ -137,6 +124,40 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                     selected={field.value}
                     placeholder="Select category"
                     {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Write note" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date</FormLabel>
+              <FormControl>
+                <div>
+                  <DatePicker
+                    {...field}
+                    value={field.value}
+                    onChange={(date) => form.setValue("date", date)}
                   />
                 </div>
               </FormControl>
