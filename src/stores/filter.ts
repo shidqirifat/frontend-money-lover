@@ -4,7 +4,7 @@ import { Option } from "@/components/ui/combobox";
 interface FilterState {
   category: Option | null;
   keyword: string;
-  setCategory: (category: Option) => void;
+  setCategory: (category: Option | null) => void;
   clearCategory: () => void;
   setKeyword: (keyword: string) => void;
 }
@@ -12,7 +12,7 @@ interface FilterState {
 const useFilter = create<FilterState>((set) => ({
   category: null,
   keyword: "",
-  setCategory: (category: Option) => set(() => ({ category })),
+  setCategory: (category: Option | null) => set(() => ({ category })),
   clearCategory: () => set(() => ({ category: null })),
   setKeyword: (keyword: string) => set(() => ({ keyword })),
 }));

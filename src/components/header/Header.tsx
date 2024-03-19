@@ -7,6 +7,7 @@ import { Logo } from "@/ui/logo";
 import { Separator } from "@/ui/separator";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useFilter from "@/stores/filter";
+import { toDatalist } from "@/lib/datalist";
 
 type ClearCategoryProps = { onClick: () => void };
 
@@ -36,18 +37,20 @@ export default function Header() {
 
       <div className="flex items-center gap-2 w-max">
         {category && <ClearCategory onClick={clearCategory} />}
-        <Combobox
-          options={CATEGORIES}
-          selected={category}
-          onChange={setCategory}
-          placeholder="Select category"
-        />
-        <InputSearch
-          placeholder="Search transaction..."
-          className="w-56 text-sm"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-        />
+        <div className="grid grid-cols-2 gap-2">
+          <Combobox
+            options={toDatalist(CATEGORIES)}
+            selected={category}
+            onChange={setCategory}
+            placeholder="Select category"
+          />
+          <InputSearch
+            placeholder="Search transaction..."
+            className="text-sm"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+        </div>
       </div>
     </header>
   );

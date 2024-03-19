@@ -19,7 +19,7 @@ type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
 export const InputGroupCtx = createContext(false);
 
 function DefaultContainer({ children }: { children: React.ReactNode }) {
-  return <div className="relative flex w-max">{children}</div>;
+  return <div className="relative flex">{children}</div>;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -84,7 +84,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               "pl-3": !leftIcon,
 
               "pl-6": size === "sm" && leftIcon,
-              "pl-7": size === "md" && leftIcon,
+              "pl-8": size === "md" && leftIcon,
               "pl-9": size === "lg" && leftIcon,
               "pl-10": size === "xl" && leftIcon,
 

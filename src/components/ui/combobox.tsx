@@ -19,13 +19,13 @@ import {
 
 export type Option = {
   label: string;
-  value: string;
-} | null;
+  value: number;
+};
 
 type ComboboxProps = {
   options: Array<Option>;
-  selected: Option;
-  onChange: (option: Option) => void;
+  selected: Option | null;
+  onChange: (option: Option | null) => void;
   placeholder?: string;
 };
 
@@ -43,7 +43,7 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("w-[200px] justify-between h-10", {
+          className={cn("justify-between h-10 w-full", {
             "text-slate-500 font-normal": !selected,
           })}
         >
@@ -64,7 +64,7 @@ export function Combobox({
                   key={option?.value}
                   value={option?.label}
                   onSelect={() => {
-                    onChange(selected?.value === option?.value ? null : option);
+                    onChange(option);
                     setOpen(false);
                   }}
                 >

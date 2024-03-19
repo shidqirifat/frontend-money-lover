@@ -5,3 +5,8 @@
 body {
   @apply bg-gray-100;
 }
+
+button:focus,
+button:focus-visible {
+  @apply !ring-2 !ring-blue-300 outline-none;
+}
