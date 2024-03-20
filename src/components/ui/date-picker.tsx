@@ -11,11 +11,12 @@ import {
 import dayjs from "dayjs";
 
 type DatePickerProps = {
+  disabled?: boolean;
   value: string;
   onChange: (value: string) => void;
 };
 
-export function DatePicker({ value, onChange }: DatePickerProps) {
+export function DatePicker({ disabled, value, onChange }: DatePickerProps) {
   const [openModal, setOpenModal] = React.useState(false);
 
   const toggleModal = () => setOpenModal((prev) => !prev);
@@ -25,9 +26,12 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
+          disabled={disabled}
           className={cn(
             "w-full justify-start text-left font-normal",
-            !value && "text-muted-foreground"
+            !value && "text-muted-foreground",
+            disabled &&
+              "bg-gray-100 border-gray-200 cursor-not-allowed !opacity-75 !pointer-events-auto"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />

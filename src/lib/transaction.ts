@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import { z } from "zod";
-import { toDatalist } from "./datalist";
+import { toOption } from "./datalist";
 import { WALLETS } from "@/data/wallet";
+import { formatNominal } from "./currency";
 
 type Entity = {
   id: number;
@@ -86,13 +87,30 @@ export const formTransactionSchema = z.object({
 
 export type TFormTransaction = z.infer<typeof formTransactionSchema>;
 
+export const generateInitialValueFormTransaction = (
+  transaction: Transaction
+): TFormTransaction => {
+  return {
+    amount: formatNominal(transaction.amount),
+    description: transaction.description,
+    date: transaction.date,
+    wallet: toOption(transaction.wallet),
+    category: toOption(transaction.category),
+    subCategory: transaction.sub_category
+      ? toOption(transaction.sub_category)
+      : null,
+  };
+};
+
 export const generateDefaultValueFormTransaction =
   (): Partial<TFormTransaction> => {
     return {
       amount: "0",
       description: "",
       date: dayjs().toISOString(),
-      wallet: toDatalist(WALLETS)[0],
+      wallet: toOption(WALLETS[0]),
       subCategory: null,
     };
   };
+
+export type TypeForm = "add" | "edit" | "detail";

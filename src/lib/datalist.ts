@@ -5,9 +5,13 @@ type Entity = {
   name: string;
 };
 
-export const toDatalist = (list: Array<Entity>): Array<Option> => {
-  return list.map((item) => ({
+export const toOption = (item: Entity): Option => {
+  return {
     label: item.name,
     value: item.id,
-  }));
+  };
+};
+
+export const toDatalist = (list: Array<Entity>): Array<Option> => {
+  return list.map(toOption);
 };

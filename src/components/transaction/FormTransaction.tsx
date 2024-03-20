@@ -14,21 +14,32 @@ import { toDatalist } from "@/lib/datalist";
 import { WALLETS } from "@/data/wallet";
 import { formatNominal } from "@/lib/currency";
 import { useEffect, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
   TFormTransaction,
+  Transaction,
+  TypeForm,
   formTransactionSchema,
   generateDefaultValueFormTransaction,
+  generateInitialValueFormTransaction,
 } from "@/lib/transaction";
 import { DatePicker } from "../ui/date-picker";
+import FormButton from "./FormButton";
 
 type FormTransactionProps = {
+  initialForm?: Transaction | null;
   openModal: boolean;
+  type: TypeForm;
+  setTypeForm?: (type: TypeForm) => void;
 };
 
-export default function FormTransaction({ openModal }: FormTransactionProps) {
+export default function FormTransaction({
+  initialForm,
+  openModal,
+  type,
+  setTypeForm,
+}: FormTransactionProps) {
   const form = useForm<TFormTransaction>({
     resolver: zodResolver(formTransactionSchema),
   });
@@ -38,6 +49,11 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
   }
 
   const [category] = form.watch(["category"]);
+
+  const assignInitFormValue = () => {
+    if (!initialForm) form.reset(generateDefaultValueFormTransaction());
+    else form.reset(generateInitialValueFormTransaction(initialForm));
+  };
 
   const subCategories = useMemo(() => {
     if (!category) return [];
@@ -56,7 +72,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
   }, [category]);
 
   useEffect(() => {
-    if (openModal) form.reset(generateDefaultValueFormTransaction());
+    if (openModal) assignInitFormValue();
   }, [openModal]);
 
   return (
@@ -72,6 +88,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                 <Input
                   placeholder="0"
                   leftIcon="Rp"
+                  disabled={type === "detail"}
                   {...field}
                   onChange={(event) => {
                     const { value } = event.target;
@@ -98,6 +115,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                     options={toDatalist(CATEGORIES)}
                     selected={field.value}
                     placeholder="Select category"
+                    disabled={type === "detail"}
                     {...field}
                     onChange={(selected) => {
                       if (selected) form.setValue("category", selected);
@@ -123,6 +141,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                     options={subCategories}
                     selected={field.value}
                     placeholder="Select category"
+                    disabled={type === "detail"}
                     {...field}
                   />
                 </div>
@@ -139,7 +158,11 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Write note" {...field} />
+                <Textarea
+                  placeholder="Write note"
+                  disabled={type === "detail"}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -156,6 +179,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                 <div>
                   <DatePicker
                     {...field}
+                    disabled={type === "detail"}
                     value={field.value}
                     onChange={(date) => form.setValue("date", date)}
                   />
@@ -178,6 +202,7 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
                     options={toDatalist(WALLETS)}
                     selected={field.value}
                     placeholder="Select sub category"
+                    disabled={type === "detail"}
                     {...field}
                   />
                 </div>
@@ -187,9 +212,16 @@ export default function FormTransaction({ openModal }: FormTransactionProps) {
           )}
         />
 
-        <Button type="submit" color="green" className="w-full">
-          Submit
-        </Button>
+        <FormButton
+          type={type}
+          onToggleEdit={() => setTypeForm && setTypeForm("edit")}
+          onCancel={() => {
+            if (setTypeForm) setTypeForm("detail");
+            assignInitFormValue();
+            form.clearErrors();
+          }}
+          onDelete={() => console.log("delete", initialForm?.id)}
+        />
       </form>
     </Form>
   );

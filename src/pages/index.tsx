@@ -8,7 +8,8 @@ import DayTransactions from "@/components/transaction/DayTransactions";
 import { useMemo } from "react";
 import useFilter from "@/stores/filter";
 import { useDebouncedValue } from "@mantine/hooks";
-import DialogTransaction from "@/components/transaction/DialogTransaction";
+import ModalAddTransaction from "@/components/transaction/ModalAddTransaction";
+import ModalDetailTransaction from "@/components/transaction/ModalDetailTransaction";
 
 export default function Home() {
   const { category, keyword } = useFilter();
@@ -30,7 +31,8 @@ export default function Home() {
 
   return (
     <AuthLayout>
-      <DialogTransaction />
+      <ModalAddTransaction />
+      <ModalDetailTransaction />
 
       <div className="bg-white pt-2 rounded-md my-20 shadow-md">
         <TabMonths />

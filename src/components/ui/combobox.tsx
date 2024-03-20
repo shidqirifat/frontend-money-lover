@@ -27,6 +27,7 @@ type ComboboxProps = {
   selected: Option | null;
   onChange: (option: Option | null) => void;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 export function Combobox({
@@ -34,6 +35,7 @@ export function Combobox({
   selected,
   onChange,
   placeholder,
+  disabled,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -43,8 +45,11 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          disabled={disabled}
           className={cn("justify-between h-10 w-full", {
             "text-slate-500 font-normal": !selected,
+            "bg-gray-100 border-gray-200 cursor-not-allowed opacity-75 !pointer-events-auto":
+              disabled,
           })}
         >
           {selected

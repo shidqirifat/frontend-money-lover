@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/lib/currency";
 import { DayTransaction, TypeTransaction } from "@/lib/transaction";
 import { cn } from "@/lib/utils";
+import useModalTransaction from "@/stores/modalTransaction";
 import dayjs from "dayjs";
 import { BanknoteIcon, Wallet } from "lucide-react";
 
@@ -45,6 +46,8 @@ const generateStyleCurrency = (masterCategoryId: number) => {
 export default function DayTransactions({
   transactions,
 }: DayTransactionsProps) {
+  const { setTransaction } = useModalTransaction();
+
   return transactions.map((day) => (
     <div key={day.date}>
       <Separator />
@@ -53,6 +56,7 @@ export default function DayTransactions({
         {day.transactions.map((transaction) => (
           <button
             key={transaction.id}
+            onClick={() => setTransaction(transaction)}
             className="grid grid-cols-[2fr_15fr] w-full text-left items-center px-4 py-3 hover:bg-green-500/10 transition"
           >
             <div className="rounded-full h-8 w-8 relative bg-green-500 grid place-content-center">

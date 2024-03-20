@@ -10,7 +10,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import FormTransaction from "./FormTransaction";
 import { useState } from "react";
 
-export default function DialogTransaction() {
+export default function ModalAddTransaction() {
   const [openModal, setOpenModal] = useState(false);
 
   const toggleModal = () => setOpenModal((prev) => !prev);
@@ -26,12 +26,12 @@ export default function DialogTransaction() {
           <PlusIcon />
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[80vw] max-w-sm top-[42%]">
+      <DialogContent className="w-[80vw] max-w-sm">
         <DialogHeader>
-          <DialogTitle>Add transaction</DialogTitle>
+          <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
 
-        <FormTransaction openModal={openModal} />
+        <FormTransaction openModal={openModal} type="add" />
       </DialogContent>
     </Dialog>
   );
