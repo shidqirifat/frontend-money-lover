@@ -8,6 +8,7 @@ import { Separator } from "@/ui/separator";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useFilter from "@/stores/filter";
 import { toDatalist } from "@/lib/datalist";
+import AuthUser from "./AuthUser";
 
 type ClearCategoryProps = { onClick: () => void };
 
@@ -35,7 +36,7 @@ export default function Header() {
         <DisplayBalance balance={20_000_000} />
       </div>
 
-      <div className="flex items-center gap-2 w-max">
+      <div className="flex items-center gap-3 w-max">
         {category && <ClearCategory onClick={clearCategory} />}
         <div className="grid grid-cols-2 gap-2">
           <Combobox
@@ -51,6 +52,10 @@ export default function Header() {
             onChange={(e) => setKeyword(e.target.value)}
           />
         </div>
+
+        <Separator orientation="vertical" className="h-9" />
+
+        <AuthUser />
       </div>
     </header>
   );
