@@ -1,4 +1,4 @@
-import { AuthResponse, TFormRegister } from "@/lib/auth";
+import { AuthResponse, TFormLogin, TFormRegister } from "@/lib/auth";
 import { getAuthConfig, http } from "@/lib/http";
 import { AxiosResponse } from "axios";
 
@@ -9,6 +9,20 @@ export const registerUserFn = async (
     "/auth/register",
     {
       name: data.name,
+      email: data.email,
+      password: data.password,
+    }
+  );
+
+  return response.data;
+};
+
+export const loginUserFn = async (
+  data: TFormLogin
+): Promise<AuthResponse> => {
+  const response: AxiosResponse<AuthResponse> = await http.post(
+    "/auth/login",
+    {
       email: data.email,
       password: data.password,
     }

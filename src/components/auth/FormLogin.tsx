@@ -12,14 +12,17 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormLogin, formLoginSchema } from "@/lib/auth";
+import useAuth from "@/queries/auth";
 
 export default function FormLogin() {
+  const { loginMutation } = useAuth();
+
   const form = useForm<TFormLogin>({
     resolver: zodResolver(formLoginSchema),
   });
 
-  function onSubmit(values: TFormLogin) {
-    console.log(values);
+  function onSubmit(form: TFormLogin) {
+    loginMutation.mutate(form);
   }
 
   return (

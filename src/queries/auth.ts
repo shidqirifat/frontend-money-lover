@@ -1,5 +1,9 @@
-import { AuthResponse, RegisterError } from "@/lib/auth";
-import { getAuthUserFn, registerUserFn } from "@/services/auth.service";
+import { AuthResponse, AuthError } from "@/lib/auth";
+import {
+  getAuthUserFn,
+  loginUserFn,
+  registerUserFn,
+} from "@/services/auth.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
@@ -13,19 +17,29 @@ export default function useAuth() {
     queryFn: getAuthUserFn,
   });
 
+  const handleSuccess = ({ data }: AuthResponse) => {
+    localStorage.setItem("token", data.token);
+    router.push("/");
+    toast.success(`Welcome ${data.name}!`);
+  };
+
+  const handleError = (error: AxiosError<AuthError>) => {
+    if (error.response?.status === 400) {
+      toast.error(error.response.data.error.message);
+    }
+  };
+
   const registerMutation = useMutation({
     mutationFn: registerUserFn,
-    onSuccess: ({data}: AuthResponse) => {
-      localStorage.setItem("token", data.token);
-      router.push("/");
-      toast.success(`Welcome ${data.name}!`);
-    },
-    onError: (error: AxiosError<RegisterError>) => {
-      if (error.response?.status === 400) {
-        toast.error(error.response.data.error.message)
-      }
-    },
+    onSuccess: handleSuccess,
+    onError: handleError,
   });
 
-  return { authUserQuery, registerMutation };
+  const loginMutation = useMutation({
+    mutationFn: loginUserFn,
+    onSuccess: handleSuccess,
+    onError: handleError,
+  });
+
+  return { authUserQuery, registerMutation, loginMutation };
 }

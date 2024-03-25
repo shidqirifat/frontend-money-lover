@@ -30,6 +30,6 @@ export type AuthResponse = HttpResponse<{
   token: string;
 }>;
 
-export type RegisterError = ErrorResponse<{
-  message: "Email is registered";
+export type AuthError = ErrorResponse<{
+  message: string;
 }>;
