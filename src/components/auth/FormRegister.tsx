@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormRegister, formRegisterSchema } from "@/lib/auth";
-import useAuth from "@/queries/auth";
+import useAuth from "@/queries/useAuth";
 
 export default function FormRegister() {
   const { registerMutation } = useAuth();

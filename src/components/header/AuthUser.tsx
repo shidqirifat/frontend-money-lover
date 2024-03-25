@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/popover";
 import { ArrowTopRightIcon, ExitIcon } from "@radix-ui/react-icons";
 import { Separator } from "../ui/separator";
-import useAuth from "@/queries/auth";
+import useAuth from "@/queries/useAuth";
 
 const AuthAvatar = () => {
   return (
