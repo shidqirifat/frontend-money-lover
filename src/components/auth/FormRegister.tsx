@@ -12,15 +12,18 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormRegister, formRegisterSchema } from "@/lib/auth";
+import useAuth from "@/queries/auth";
 
 export default function FormRegister() {
+  const { registerMutation } = useAuth();
+
   const form = useForm<TFormRegister>({
     resolver: zodResolver(formRegisterSchema),
   });
 
-  function onSubmit(values: TFormRegister) {
-    console.log(values);
-  }
+  const onSubmit = (form: TFormRegister) => {
+    registerMutation.mutate(form);
+  };
 
   return (
     <Form {...form}>

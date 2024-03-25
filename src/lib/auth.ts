@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ErrorResponse, HttpResponse } from "./http";
 
 export const formLoginSchema = z.object({
   email: z.string({ required_error: "Email is required" }).email(),
@@ -22,3 +23,13 @@ export const formRegisterSchema = z
 export type TFormLogin = z.infer<typeof formLoginSchema>;
 
 export type TFormRegister = z.infer<typeof formRegisterSchema>;
+
+export type AuthResponse = HttpResponse<{
+  name: string;
+  email: string;
+  token: string;
+}>;
+
+export type RegisterError = ErrorResponse<{
+  message: "Email is registered";
+}>;
