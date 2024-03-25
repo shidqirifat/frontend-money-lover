@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/popover";
 import { ArrowTopRightIcon, ExitIcon } from "@radix-ui/react-icons";
 import { Separator } from "../ui/separator";
+import useAuth from "@/queries/auth";
 
 const AuthAvatar = () => {
   return (
@@ -34,9 +35,14 @@ const AuthProfile = () => {
 };
 
 const Logout = () => {
+  const { logoutMutation } = useAuth();
+
   return (
     <div>
-      <button className="h-full w-14 rounded flex flex-col justify-center items-center gap-2 bg-slate-200/50 hover:bg-slate-200 transition">
+      <button
+        onClick={() => logoutMutation.mutate()}
+        className="h-full w-14 rounded flex flex-col justify-center items-center gap-2 bg-slate-200/50 hover:bg-slate-200 transition"
+      >
         <ExitIcon width={14} height={14} />
         <span className="text-xs text-slate-700 font-normal text-center">
           Logout

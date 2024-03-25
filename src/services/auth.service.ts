@@ -17,16 +17,11 @@ export const registerUserFn = async (
   return response.data;
 };
 
-export const loginUserFn = async (
-  data: TFormLogin
-): Promise<AuthResponse> => {
-  const response: AxiosResponse<AuthResponse> = await http.post(
-    "/auth/login",
-    {
-      email: data.email,
-      password: data.password,
-    }
-  );
+export const loginUserFn = async (data: TFormLogin): Promise<AuthResponse> => {
+  const response: AxiosResponse<AuthResponse> = await http.post("/auth/login", {
+    email: data.email,
+    password: data.password,
+  });
 
   return response.data;
 };
@@ -38,4 +33,8 @@ export const getAuthUserFn = async (): Promise<AuthResponse> => {
   );
 
   return response.data;
+};
+
+export const logoutUserFn = async () => {
+  await http.post("/auth/logout", undefined, getAuthConfig());
 };
