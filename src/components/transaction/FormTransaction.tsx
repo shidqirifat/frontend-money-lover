@@ -49,7 +49,7 @@ export default function FormTransaction({
 
   const onSubmit = (form: TFormTransaction) => {
     if (type === "add") mutation?.mutate(form);
-    mutation?.mutate({ payload: form, id: initialForm?.id as number });
+    else mutation?.mutate({ payload: form, id: initialForm?.id as number });
   };
 
   const [category] = form.watch(["category"]);
@@ -225,7 +225,6 @@ export default function FormTransaction({
             assignInitFormValue();
             form.clearErrors();
           }}
-          onDelete={() => console.log("delete", initialForm?.id)}
         />
       </form>
     </Form>

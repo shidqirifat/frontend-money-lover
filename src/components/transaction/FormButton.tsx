@@ -7,16 +7,12 @@ interface FormButtonProps extends BaseButton {
   type: TypeForm;
   onToggleEdit: () => void;
   onCancel: () => void;
-  onDelete: () => void;
 }
 
-type DetailFormButtonProps = Pick<FormButtonProps, "onToggleEdit" | "onDelete">;
+type DetailFormButtonProps = Pick<FormButtonProps, "onToggleEdit">;
 type EditFormButtonProps = Pick<FormButtonProps, "onCancel">;
 
-const DetailFormButton = ({
-  onToggleEdit,
-  onDelete,
-}: DetailFormButtonProps) => {
+const DetailFormButton = ({ onToggleEdit }: DetailFormButtonProps) => {
   return (
     <div className="space-y-2">
       <Button
@@ -27,7 +23,7 @@ const DetailFormButton = ({
       >
         Edit Transaction
       </Button>
-      <ModalDeleteTransaction onDelete={onDelete} />
+      <ModalDeleteTransaction />
     </div>
   );
 };
@@ -63,10 +59,9 @@ export default function FormButton({
   disabled,
   onToggleEdit,
   onCancel,
-  onDelete,
 }: FormButtonProps) {
   if (type === "add") return <AddFormButton disabled={disabled} />;
   if (type === "edit") return <EditFormButton onCancel={onCancel} />;
 
-  return <DetailFormButton onToggleEdit={onToggleEdit} onDelete={onDelete} />;
+  return <DetailFormButton onToggleEdit={onToggleEdit} />;
 }

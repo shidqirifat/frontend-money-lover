@@ -69,3 +69,7 @@ export const editTransactionFn = async ({
 
   return response.data.data;
 };
+
+export const deleteTransactionFn = async (id: number) => {
+  await http.delete(`/transactions/${id}`, getAuthConfig());
+};

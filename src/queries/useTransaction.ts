@@ -3,6 +3,7 @@ import {
   BaseParamsTransaction,
   ParamsGetTransaction,
   createTransactionFn,
+  deleteTransactionFn,
   editTransactionFn,
   getSummaryTransactionFn,
   getTransactionFn,
@@ -55,17 +56,24 @@ export default function useTransaction() {
     staleTime: 100,
   });
 
-  const createTransactionMutation = useMutation({
-    mutationFn: createTransactionFn,
-    onSuccess: () => {
-      successMutationHandler("Successfully add new transaction");
-    },
-  });
-
   const editTransactionMutation = useMutation({
     mutationFn: editTransactionFn,
     onSuccess: () => {
       successMutationHandler("Successfully update transaction");
+    },
+  });
+
+  const deleteTransactionMutation = useMutation({
+    mutationFn: deleteTransactionFn,
+    onSuccess: () => {
+      successMutationHandler("Successfully delete transaction");
+    },
+  });
+
+  const createTransactionMutation = useMutation({
+    mutationFn: createTransactionFn,
+    onSuccess: () => {
+      successMutationHandler("Successfully add new transaction");
     },
   });
 
@@ -74,5 +82,6 @@ export default function useTransaction() {
     summaryTransactionQuery,
     createTransactionMutation,
     editTransactionMutation,
+    deleteTransactionMutation,
   };
 }

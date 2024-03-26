@@ -25,7 +25,7 @@ export default function ModalDetailTransaction() {
   };
 
   useEffect(() => {
-    if (transaction) setOpenModal(true);
+    setOpenModal(Boolean(transaction));
   }, [transaction]);
 
   useEffect(() => {
