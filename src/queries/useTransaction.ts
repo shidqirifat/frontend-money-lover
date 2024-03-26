@@ -15,15 +15,18 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
+import useWallet from "./useWallet";
 
 export default function useTransaction() {
   const { category, keyword } = useFilter();
   const [debouncedKeyword] = useDebouncedValue(keyword, 300);
   const { activeMonth } = useTabMonth();
+  const { summaryWalletQuery } = useWallet();
 
   const successMutationHandler = (message: string) => {
     transactionQuery.refetch();
     summaryTransactionQuery.refetch();
+    summaryWalletQuery.refetch();
     toast.success(message);
   };
 

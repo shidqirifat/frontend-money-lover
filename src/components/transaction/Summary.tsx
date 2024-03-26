@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 import useTransaction from "@/queries/useTransaction";
+import { useMemo } from "react";
 
 type LabelProps = { children: string };
 type ValueProps = { type: "inflow" | "outflow"; children: string };
@@ -27,6 +28,10 @@ const Value = ({ children, type }: ValueProps) => {
 export default function Summary() {
   const { summaryTransactionQuery } = useTransaction();
 
+  const isProfit = useMemo(() => {
+    return (summaryTransactionQuery.data?.net_income || 0) > 0;
+  }, [summaryTransactionQuery.data?.net_income]);
+
   return (
     <div className="space-y-2 p-4">
       <div className="flex items-center justify-between">
@@ -43,7 +48,8 @@ export default function Summary() {
       </div>
       <div className="ml-auto border-t border-slate-300 pt-1 w-36">
         <h2 className="text-slate-600 text-right text-base font-medium leading-5">
-          +{formatCurrency(summaryTransactionQuery.data?.net_income || 0)}
+          {isProfit ? "+" : "-"}
+          {formatCurrency(summaryTransactionQuery.data?.net_income || 0, true)}
         </h2>
       </div>
     </div>

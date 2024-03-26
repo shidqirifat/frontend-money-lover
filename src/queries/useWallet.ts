@@ -5,6 +5,7 @@ export default function useWallet() {
   const summaryWalletQuery = useQuery({
     queryKey: ["summary-wallet"],
     queryFn: getSummaryWalletFn,
+    staleTime: 200,
   });
 
   return { summaryWalletQuery };

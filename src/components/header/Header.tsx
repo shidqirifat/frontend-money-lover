@@ -29,7 +29,7 @@ export default function Header() {
     useFilter();
 
   return (
-    <header className="py-4 px-6 flex justify-between items-center bg-white shadow">
+    <header className="py-4 px-6 flex justify-between items-center bg-white shadow sticky top-0 z-10">
       <div className="flex items-center gap-3">
         <Logo />
         <Separator orientation="vertical" className="h-9" />
