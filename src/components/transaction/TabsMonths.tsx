@@ -1,5 +1,6 @@
-import { getCurrentMonth, getNextMonth, getPrevMonth } from "@/lib/date";
+import { getNextMonth, getPrevMonth } from "@/lib/date";
 import { cn } from "@/lib/utils";
+import useTabMonth from "@/stores/tabMonth";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 
@@ -40,7 +41,7 @@ const generateTextMonth = (month: string) => {
 };
 
 export default function TabMonths() {
-  const [activeMonth, setActiveMonth] = useState(getCurrentMonth());
+  const { activeMonth, setActiveMonth } = useTabMonth();
   const [prevMonth, setPrevMonth] = useState("");
   const [nextMonth, setNextMonth] = useState("");
 
