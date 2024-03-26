@@ -114,3 +114,9 @@ export const generateDefaultValueFormTransaction =
   };
 
 export type TypeForm = "add" | "edit" | "detail";
+
+export type SummaryTransactionResponse = {
+  expense: number;
+  income: number;
+  net_income: number;
+};

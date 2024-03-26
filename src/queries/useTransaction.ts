@@ -1,6 +1,8 @@
 import { getNextMonth } from "@/lib/date";
 import {
+  BaseParamsTransaction,
   ParamsGetTransaction,
+  getSummaryTransactionFn,
   getTransactionFn,
 } from "@/services/transaction.service";
 import useFilter from "@/stores/filter";
@@ -15,21 +17,32 @@ export default function useTransaction() {
   const [debouncedKeyword] = useDebouncedValue(keyword, 300);
   const { activeMonth } = useTabMonth();
 
-  const paramsTransaction = useMemo<ParamsGetTransaction>(() => {
+  const baseParamsTransaction = useMemo<BaseParamsTransaction>(() => {
     return {
       fromDate: dayjs(activeMonth).toISOString(),
       toDate: dayjs(
         getNextMonth(dayjs(activeMonth).toISOString())
       ).toISOString(),
+    };
+  }, [activeMonth]);
+
+  const paramsTransaction = useMemo<ParamsGetTransaction>(() => {
+    return {
+      ...baseParamsTransaction,
       keyword: debouncedKeyword,
       categoryId: category?.value,
     };
-  }, [category, debouncedKeyword, activeMonth]);
+  }, [category, debouncedKeyword, baseParamsTransaction]);
 
   const transactionQuery = useQuery({
     queryKey: ["transaction", paramsTransaction],
     queryFn: () => getTransactionFn(paramsTransaction),
   });
 
-  return { transactionQuery };
+  const summaryTransactionQuery = useQuery({
+    queryKey: ["summary-transaction", baseParamsTransaction],
+    queryFn: () => getSummaryTransactionFn(baseParamsTransaction),
+  });
+
+  return { transactionQuery, summaryTransactionQuery };
 }

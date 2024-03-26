@@ -11,7 +11,7 @@ import { toDayTransactions } from "@/lib/transaction";
 export default function Home() {
   const { transactionQuery } = useTransaction();
 
-  const noTransaction = false;
+  const noTransaction = transactionQuery.data?.length === 0;
 
   return (
     <AuthLayout>
