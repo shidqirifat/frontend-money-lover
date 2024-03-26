@@ -1,10 +1,11 @@
 import FormLogin from "@/components/auth/FormLogin";
 import { Logo } from "@/components/ui/logo";
+import NotAuthLayout from "@/layouts/NotAuthLayout";
 import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div>
+    <NotAuthLayout>
       <div className="bg-green-700 h-[30vh] relative">
         <div className="scale-[2] absolute top-[40%] translate-y-[-50%] left-[50%] translate-x-[-50%]">
           <Logo />
@@ -29,6 +30,6 @@ export default function LoginPage() {
           </h3>
         </div>
       </div>
-    </div>
+    </NotAuthLayout>
   );
 }

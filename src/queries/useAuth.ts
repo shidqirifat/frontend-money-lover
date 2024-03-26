@@ -18,6 +18,7 @@ export default function useAuth() {
     queryKey: ["auth-user"],
     queryFn: getAuthUserFn,
     retry: false,
+    enabled: false,
   });
 
   const handleSuccessAuth = ({ data }: AuthResponse) => {
