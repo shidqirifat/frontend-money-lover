@@ -1,8 +1,9 @@
+import useWallet from "@/queries/useWallet";
 import ToggleCurrency from "@/ui/toggle-currency";
 
-type DisplayBalanceProps = { balance: number };
+export default function DisplayBalance() {
+  const { summaryWalletQuery } = useWallet();
 
-export default function DisplayBalance({ balance }: DisplayBalanceProps) {
   return (
     <div className="flex items-center gap-3">
       <h1 className="font-bold text-2xl -mx-3">💲</h1>
@@ -10,7 +11,7 @@ export default function DisplayBalance({ balance }: DisplayBalanceProps) {
         <h3 className="text-sm text-slate-600 font-medium leading-4">
           Total Balance
         </h3>
-        <ToggleCurrency balance={balance} />
+        <ToggleCurrency balance={summaryWalletQuery.data?.total_balance || 0} />
       </div>
     </div>
   );

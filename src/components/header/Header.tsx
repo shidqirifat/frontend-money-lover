@@ -33,7 +33,7 @@ export default function Header() {
       <div className="flex items-center gap-3">
         <Logo />
         <Separator orientation="vertical" className="h-9" />
-        <DisplayBalance balance={20_000_000} />
+        <DisplayBalance />
       </div>
 
       <div className="flex items-center gap-3 w-max">
