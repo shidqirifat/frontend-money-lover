@@ -1,5 +1,10 @@
 import { HttpResponse, getAuthConfig, http } from "@/lib/http";
-import { SummaryTransactionResponse, Transaction } from "@/lib/transaction";
+import {
+  SummaryTransactionResponse,
+  TFormTransaction,
+  Transaction,
+  generatePayloadTransaction,
+} from "@/lib/transaction";
 import { AxiosResponse } from "axios";
 
 export type BaseParamsTransaction = {
@@ -14,6 +19,11 @@ export interface ParamsGetTransaction extends BaseParamsTransaction {
   categoryId?: number;
   walletId?: number;
 }
+
+type editTransactionFnArg = {
+  payload: TFormTransaction;
+  id: number;
+};
 
 export const getTransactionFn = async (
   params: ParamsGetTransaction
@@ -31,6 +41,31 @@ export const getSummaryTransactionFn = async (
 ): Promise<SummaryTransactionResponse> => {
   const response: AxiosResponse<HttpResponse<SummaryTransactionResponse>> =
     await http.get("/summaries/transaction", getAuthConfig({ params }));
+
+  return response.data.data;
+};
+
+export const createTransactionFn = async (
+  payload: TFormTransaction
+): Promise<Transaction[]> => {
+  const response: AxiosResponse<HttpResponse<Transaction[]>> = await http.post(
+    "/transactions",
+    generatePayloadTransaction(payload),
+    getAuthConfig()
+  );
+
+  return response.data.data;
+};
+
+export const editTransactionFn = async ({
+  payload,
+  id,
+}: editTransactionFnArg): Promise<Transaction[]> => {
+  const response: AxiosResponse<HttpResponse<Transaction[]>> = await http.put(
+    `/transactions/${id}`,
+    generatePayloadTransaction(payload),
+    getAuthConfig()
+  );
 
   return response.data.data;
 };

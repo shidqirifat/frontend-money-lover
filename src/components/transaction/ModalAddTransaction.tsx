@@ -8,12 +8,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import FormTransaction from "./FormTransaction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useTransaction from "@/queries/useTransaction";
+import { UseMutationResult } from "@tanstack/react-query";
 
 export default function ModalAddTransaction() {
   const [openModal, setOpenModal] = useState(false);
+  const { createTransactionMutation } = useTransaction();
 
-  const toggleModal = () => setOpenModal((prev) => !prev);
+  const toggleModal = () => {
+    if (createTransactionMutation.isPending) return;
+
+    setOpenModal((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (createTransactionMutation.isSuccess) toggleModal();
+  }, [createTransactionMutation.isSuccess]);
 
   return (
     <Dialog open={openModal} onOpenChange={toggleModal}>
@@ -31,7 +42,11 @@ export default function ModalAddTransaction() {
           <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
 
-        <FormTransaction openModal={openModal} type="add" />
+        <FormTransaction
+          openModal={openModal}
+          type="add"
+          mutation={createTransactionMutation as UseMutationResult}
+        />
       </DialogContent>
     </Dialog>
   );

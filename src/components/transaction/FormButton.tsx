@@ -2,12 +2,13 @@ import { TypeForm } from "@/lib/transaction";
 import { Button } from "@/components/ui/button";
 import ModalDeleteTransaction from "./ModalDeleteTransaction";
 
-type FormButtonProps = {
+type BaseButton = { disabled?: boolean };
+interface FormButtonProps extends BaseButton {
   type: TypeForm;
   onToggleEdit: () => void;
   onCancel: () => void;
   onDelete: () => void;
-};
+}
 
 type DetailFormButtonProps = Pick<FormButtonProps, "onToggleEdit" | "onDelete">;
 type EditFormButtonProps = Pick<FormButtonProps, "onCancel">;
@@ -49,9 +50,9 @@ const EditFormButton = ({ onCancel }: EditFormButtonProps) => {
   );
 };
 
-const AddFormButton = () => {
+const AddFormButton = ({ disabled }: BaseButton) => {
   return (
-    <Button type="submit" color="green" className="w-full">
+    <Button disabled={disabled} type="submit" color="green" className="w-full">
       Submit Add Transaction
     </Button>
   );
@@ -59,11 +60,12 @@ const AddFormButton = () => {
 
 export default function FormButton({
   type,
+  disabled,
   onToggleEdit,
   onCancel,
   onDelete,
 }: FormButtonProps) {
-  if (type === "add") return <AddFormButton />;
+  if (type === "add") return <AddFormButton disabled={disabled} />;
   if (type === "edit") return <EditFormButton onCancel={onCancel} />;
 
   return <DetailFormButton onToggleEdit={onToggleEdit} onDelete={onDelete} />;

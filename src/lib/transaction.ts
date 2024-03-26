@@ -120,3 +120,25 @@ export type SummaryTransactionResponse = {
   income: number;
   net_income: number;
 };
+
+export type PayloadTransaction = {
+  amount: number;
+  description: string;
+  date: string;
+  categoryId: number;
+  subCategoryId: number | null;
+  walletId: number;
+};
+
+export const generatePayloadTransaction = (
+  form: TFormTransaction
+): PayloadTransaction => {
+  return {
+    amount: Number(form.amount.replace(/[,.]/g, "")),
+    description: form.description,
+    date: form.date,
+    categoryId: form.category.value,
+    subCategoryId: form.subCategory?.value || null,
+    walletId: form.wallet.value,
+  };
+};

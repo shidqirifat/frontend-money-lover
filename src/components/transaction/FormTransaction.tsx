@@ -26,12 +26,14 @@ import {
 } from "@/lib/transaction";
 import { DatePicker } from "../ui/date-picker";
 import FormButton from "./FormButton";
+import { UseMutationResult } from "@tanstack/react-query";
 
 type FormTransactionProps = {
   initialForm?: Transaction | null;
   openModal: boolean;
   type: TypeForm;
   setTypeForm?: (type: TypeForm) => void;
+  mutation?: UseMutationResult;
 };
 
 export default function FormTransaction({
@@ -39,14 +41,16 @@ export default function FormTransaction({
   openModal,
   type,
   setTypeForm,
+  mutation,
 }: FormTransactionProps) {
   const form = useForm<TFormTransaction>({
     resolver: zodResolver(formTransactionSchema),
   });
 
-  function onSubmit(values: TFormTransaction) {
-    console.log(values);
-  }
+  const onSubmit = (form: TFormTransaction) => {
+    if (type === "add") mutation?.mutate(form);
+    mutation?.mutate({ payload: form, id: initialForm?.id as number });
+  };
 
   const [category] = form.watch(["category"]);
 
@@ -214,6 +218,7 @@ export default function FormTransaction({
 
         <FormButton
           type={type}
+          disabled={mutation?.isPending}
           onToggleEdit={() => setTypeForm && setTypeForm("edit")}
           onCancel={() => {
             if (setTypeForm) setTypeForm("detail");
