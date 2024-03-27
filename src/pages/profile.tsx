@@ -21,16 +21,16 @@ type ModeForm = "detail" | "edit";
 
 export default function Home() {
   const [mode, setMode] = useState<ModeForm>("detail");
-  const { authUserQuery } = useAuth();
+  const { authUserQuery, updateUserMutation } = useAuth();
   const form = useForm<TFormProfile>({
     resolver: zodResolver(formProfileSchema),
   });
 
   const onSubmit = (form: TFormProfile) => {
-    console.log(form);
+    updateUserMutation.mutate(form);
   };
 
-  useEffect(() => {
+  const resetForm = () => {
     const auth = authUserQuery.data?.data;
     if (!auth) return;
 
@@ -40,7 +40,9 @@ export default function Home() {
       password: "",
       confirmPassword: "",
     });
-  }, [authUserQuery.data?.data]);
+  };
+
+  useEffect(() => resetForm(), [authUserQuery.data?.data]);
 
   return (
     <AuthLayout hideTransaction>
@@ -142,11 +144,19 @@ export default function Home() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setMode("detail")}
+                    disabled={updateUserMutation.isPending}
+                    onClick={() => {
+                      setMode("detail");
+                      resetForm();
+                    }}
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" color="green">
+                  <Button
+                    type="submit"
+                    color="green"
+                    disabled={updateUserMutation.isPending}
+                  >
                     Save Profile
                   </Button>
                 </div>

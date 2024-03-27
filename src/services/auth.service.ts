@@ -1,4 +1,9 @@
-import { AuthResponse, TFormLogin, TFormRegister } from "@/lib/auth";
+import {
+  AuthResponse,
+  TFormLogin,
+  TFormProfile,
+  TFormRegister,
+} from "@/lib/auth";
 import { getAuthConfig, http } from "@/lib/http";
 import { AxiosResponse } from "axios";
 
@@ -29,6 +34,22 @@ export const loginUserFn = async (data: TFormLogin): Promise<AuthResponse> => {
 export const getAuthUserFn = async (): Promise<AuthResponse> => {
   const response: AxiosResponse<AuthResponse> = await http.get(
     "/auth",
+    getAuthConfig()
+  );
+
+  return response.data;
+};
+
+export const updateUserFn = async (
+  data: TFormProfile
+): Promise<AuthResponse> => {
+  const response: AxiosResponse<AuthResponse> = await http.put(
+    "/auth",
+    {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    },
     getAuthConfig()
   );
 

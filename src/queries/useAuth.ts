@@ -4,6 +4,7 @@ import {
   loginUserFn,
   logoutUserFn,
   registerUserFn,
+  updateUserFn,
 } from "@/services/auth.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -45,6 +46,15 @@ export default function useAuth() {
     onError: handleErrorAuth,
   });
 
+  const updateUserMutation = useMutation({
+    mutationFn: updateUserFn,
+    onSuccess: () => {
+      authUserQuery.refetch();
+      toast.success(`Successfully update profile`);
+    },
+    onError: handleErrorAuth,
+  });
+
   const logoutMutation = useMutation({
     mutationFn: logoutUserFn,
     onSuccess: () => {
@@ -54,5 +64,11 @@ export default function useAuth() {
     },
   });
 
-  return { authUserQuery, registerMutation, loginMutation, logoutMutation };
+  return {
+    authUserQuery,
+    registerMutation,
+    loginMutation,
+    updateUserMutation,
+    logoutMutation,
+  };
 }
