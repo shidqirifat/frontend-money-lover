@@ -9,8 +9,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Combobox } from "@/components/ui/combobox";
-import { toDatalist } from "@/lib/datalist";
-import { WALLETS } from "@/data/wallet";
+import { toDatalist, toOption } from "@/lib/datalist";
 import { formatNominal } from "@/lib/currency";
 import { useEffect, useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +27,7 @@ import FormButton from "./FormButton";
 import { UseMutationResult } from "@tanstack/react-query";
 import useCategory from "@/queries/useCategory";
 import { getSubCategoriesByCategory } from "@/lib/category";
+import useWallet from "@/queries/useWallet";
 
 type FormTransactionProps = {
   initialForm?: Transaction | null;
@@ -44,6 +44,7 @@ export default function FormTransaction({
   setTypeForm,
   mutation,
 }: FormTransactionProps) {
+  const { summaryWalletQuery } = useWallet();
   const { data: subCategoriesData, categories } = useCategory();
   const form = useForm<TFormTransaction>({
     resolver: zodResolver(formTransactionSchema),
@@ -57,8 +58,13 @@ export default function FormTransaction({
   const [category] = form.watch(["category"]);
 
   const assignInitFormValue = () => {
-    if (!initialForm) form.reset(generateDefaultValueFormTransaction());
-    else form.reset(generateInitialValueFormTransaction(initialForm));
+    if (!initialForm) {
+      form.reset(generateDefaultValueFormTransaction());
+
+      if (summaryWalletQuery.data?.wallets) {
+        form.setValue("wallet", toOption(summaryWalletQuery.data.wallets[0]));
+      }
+    } else form.reset(generateInitialValueFormTransaction(initialForm));
   };
 
   const subCategories = useMemo(
@@ -139,7 +145,7 @@ export default function FormTransaction({
                   <Combobox
                     options={subCategories}
                     selected={field.value}
-                    placeholder="Select category"
+                    placeholder="Select sub category"
                     disabled={type === "detail"}
                     {...field}
                   />
@@ -198,9 +204,9 @@ export default function FormTransaction({
               <FormControl>
                 <div>
                   <Combobox
-                    options={toDatalist(WALLETS)}
+                    options={toDatalist(summaryWalletQuery.data?.wallets || [])}
                     selected={field.value}
-                    placeholder="Select sub category"
+                    placeholder="Select wallet"
                     disabled={type === "detail"}
                     {...field}
                   />

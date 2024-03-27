@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { z } from "zod";
 import { toOption } from "./datalist";
-import { WALLETS } from "@/data/wallet";
 import { formatNominal } from "./currency";
 
 type Entity = {
@@ -108,7 +107,6 @@ export const generateDefaultValueFormTransaction =
       amount: "0",
       description: "",
       date: dayjs().toISOString(),
-      wallet: toOption(WALLETS[0]),
       subCategory: null,
     };
   };
