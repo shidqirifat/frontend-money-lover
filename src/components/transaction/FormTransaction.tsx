@@ -9,7 +9,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Combobox } from "@/components/ui/combobox";
-import { CATEGORIES, SUBCATEGORIES } from "@/data/category";
 import { toDatalist } from "@/lib/datalist";
 import { WALLETS } from "@/data/wallet";
 import { formatNominal } from "@/lib/currency";
@@ -27,6 +26,8 @@ import {
 import { DatePicker } from "../ui/date-picker";
 import FormButton from "./FormButton";
 import { UseMutationResult } from "@tanstack/react-query";
+import useCategory from "@/queries/useCategory";
+import { getSubCategoriesByCategory } from "@/lib/category";
 
 type FormTransactionProps = {
   initialForm?: Transaction | null;
@@ -43,6 +44,7 @@ export default function FormTransaction({
   setTypeForm,
   mutation,
 }: FormTransactionProps) {
+  const { data: subCategoriesData, categories } = useCategory();
   const form = useForm<TFormTransaction>({
     resolver: zodResolver(formTransactionSchema),
   });
@@ -59,17 +61,10 @@ export default function FormTransaction({
     else form.reset(generateInitialValueFormTransaction(initialForm));
   };
 
-  const subCategories = useMemo(() => {
-    if (!category) return [];
-
-    const subCategoriesSelected = SUBCATEGORIES.find(
-      (item) => item.id === category.value
-    )?.subCategories;
-
-    if (!subCategoriesSelected || subCategoriesSelected.length === 0) return [];
-
-    return toDatalist(subCategoriesSelected);
-  }, [category]);
+  const subCategories = useMemo(
+    () => getSubCategoriesByCategory(category, subCategoriesData),
+    [category, subCategoriesData]
+  );
 
   useEffect(() => {
     if (category) form.clearErrors("category");
@@ -116,7 +111,7 @@ export default function FormTransaction({
               <FormControl>
                 <div>
                   <Combobox
-                    options={toDatalist(CATEGORIES)}
+                    options={toDatalist(categories)}
                     selected={field.value}
                     placeholder="Select category"
                     disabled={type === "detail"}

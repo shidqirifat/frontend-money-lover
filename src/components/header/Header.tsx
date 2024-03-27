@@ -1,4 +1,3 @@
-import { CATEGORIES } from "@/data/category";
 import DisplayBalance from "./DisplayBalance";
 import { Button } from "@/ui/button";
 import { Combobox } from "@/ui/combobox";
@@ -9,6 +8,7 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import useFilter from "@/stores/filter";
 import { toDatalist } from "@/lib/datalist";
 import AuthUser from "./AuthUser";
+import useCategory from "@/queries/useCategory";
 
 type ClearCategoryProps = { onClick: () => void };
 
@@ -27,6 +27,7 @@ const ClearCategory = ({ onClick }: ClearCategoryProps) => {
 export default function Header() {
   const { category, keyword, setCategory, clearCategory, setKeyword } =
     useFilter();
+  const { categories } = useCategory();
 
   return (
     <header className="py-4 px-6 flex justify-between items-center bg-white shadow sticky top-0 z-10">
@@ -40,7 +41,7 @@ export default function Header() {
         {category && <ClearCategory onClick={clearCategory} />}
         <div className="grid grid-cols-2 gap-2">
           <Combobox
-            options={toDatalist(CATEGORIES)}
+            options={toDatalist(categories)}
             selected={category}
             onChange={setCategory}
             placeholder="Select category"
