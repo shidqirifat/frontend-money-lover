@@ -18,13 +18,15 @@ const AuthAvatar = () => {
 };
 
 const AuthProfile = () => {
+  const { authUserQuery } = useAuth();
+
   return (
     <div className="space-y-1">
       <h3 className="text-slate-700 font-semibold text-base leading-5">
-        Shidqi Rifat Pangestu
+        {authUserQuery.data?.data.name}
       </h3>
       <h4 className="text-slate-600 font-normal text-sm leading-4">
-        shidqi@example.com
+        {authUserQuery.data?.data.email}
       </h4>
       <button className="text-slate-600 hover:text-sky-500 transition font-normal text-xs leading-4 flex items-center">
         Edit account
