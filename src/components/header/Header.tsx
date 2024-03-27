@@ -11,6 +11,7 @@ import AuthUser from "./AuthUser";
 import useCategory from "@/queries/useCategory";
 
 type ClearCategoryProps = { onClick: () => void };
+type HeaderProps = { hideTransaction?: boolean };
 
 const ClearCategory = ({ onClick }: ClearCategoryProps) => {
   return (
@@ -24,13 +25,28 @@ const ClearCategory = ({ onClick }: ClearCategoryProps) => {
   );
 };
 
-export default function Header() {
+export default function Header({ hideTransaction }: HeaderProps) {
+  if (hideTransaction) return <HeaderWithoutTransaction />;
+
+  return <HeaderWithTransaction />;
+}
+
+function HeaderWithoutTransaction() {
+  return (
+    <header className="py-4 px-6 h-20 flex justify-between items-center bg-white shadow sticky top-0 z-10">
+      <Logo />
+      <AuthUser />
+    </header>
+  );
+}
+
+function HeaderWithTransaction() {
   const { category, keyword, setCategory, clearCategory, setKeyword } =
     useFilter();
   const { categories } = useCategory();
 
   return (
-    <header className="py-4 px-6 flex justify-between items-center bg-white shadow sticky top-0 z-10">
+    <header className="py-4 px-6 h-20 flex justify-between items-center bg-white shadow sticky top-0 z-10">
       <div className="flex items-center gap-3">
         <Logo />
         <Separator orientation="vertical" className="h-9" />

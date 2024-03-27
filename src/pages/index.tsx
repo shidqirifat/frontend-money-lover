@@ -15,18 +15,20 @@ export default function Home() {
 
   return (
     <AuthLayout>
-      <ModalAddTransaction />
-      <ModalDetailTransaction />
+      <main className="max-w-md mx-auto">
+        <ModalAddTransaction />
+        <ModalDetailTransaction />
 
-      <div className="bg-white pt-2 rounded-md my-20 shadow-md">
-        <TabMonths />
+        <div className="bg-white pt-2 rounded-md my-20 shadow-md">
+          <TabMonths />
 
-        {noTransaction ? <NoTransaction /> : <Summary />}
+          {noTransaction ? <NoTransaction /> : <Summary />}
 
-        <DayTransactions
-          transactions={toDayTransactions(transactionQuery.data || [])}
-        />
-      </div>
+          <DayTransactions
+            transactions={toDayTransactions(transactionQuery.data || [])}
+          />
+        </div>
+      </main>
     </AuthLayout>
   );
 }

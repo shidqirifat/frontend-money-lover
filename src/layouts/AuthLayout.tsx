@@ -6,9 +6,12 @@ import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
-type AuthLayoutProps = { children: ReactNode };
+type AuthLayoutProps = { children: ReactNode; hideTransaction?: boolean };
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default function AuthLayout({
+  children,
+  hideTransaction,
+}: AuthLayoutProps) {
   const { authUserQuery } = useAuth();
   const router = useRouter();
 
@@ -21,8 +24,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
   else if (authUserQuery.isSuccess) {
     return (
       <div className={inter.className}>
-        <Header />
-        <main className="max-w-md mx-auto">{children}</main>
+        <Header hideTransaction={hideTransaction} />
+        {children}
       </div>
     );
   }
