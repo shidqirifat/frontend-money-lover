@@ -1,3 +1,4 @@
+import ROUTES from "@/lib/route";
 import { cn } from "@/lib/utils";
 import { LucideIcon, Settings, Tags, User, Wallet } from "lucide-react";
 import Link from "next/link";
@@ -38,21 +39,21 @@ const Navigation = ({ children, icon, url }: NavigationProps) => {
 
 export default function SettingNavigations() {
   return (
-    <div className="p-12 border-r border-slate-100">
+    <div className="p-12 pt-8 border-r border-slate-100">
       <div className="flex items-center gap-2">
         <Settings width={28} height={28} />
         <h1 className="text-slate-600 font-semibold text-2xl leading-6">
           Settings
         </h1>
       </div>
-      <div className="mt-8 flex flex-col gap-2 relative -left-3">
-        <Navigation url="/settings/categories" icon={Tags}>
+      <div className="mt-6 flex flex-col gap-2 relative -left-3">
+        <Navigation url={ROUTES.SETTING_CATEGORY()} icon={Tags}>
           Category
         </Navigation>
-        <Navigation url="/settings/wallets" icon={Wallet}>
+        <Navigation url={ROUTES.SETTING_WALLET()} icon={Wallet}>
           Wallet
         </Navigation>
-        <Navigation url="/settings/profile" icon={User}>
+        <Navigation url={ROUTES.SETTING_PROFILE()} icon={User}>
           Profile
         </Navigation>
       </div>

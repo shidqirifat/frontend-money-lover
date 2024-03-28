@@ -8,6 +8,7 @@ import { ArrowTopRightIcon, ExitIcon } from "@radix-ui/react-icons";
 import { Separator } from "../ui/separator";
 import useAuth from "@/queries/useAuth";
 import Link from "next/link";
+import ROUTES from "@/lib/route";
 
 const AuthAvatar = () => {
   return (
@@ -30,7 +31,7 @@ const AuthProfile = () => {
         {authUserQuery.data?.data.email}
       </h4>
       <Link
-        href="/settings/profile"
+        href={ROUTES.SETTING_PROFILE()}
         className="text-sky-600 underline underline-offset-2 font-normal text-xs leading-4 flex items-center"
       >
         Edit account

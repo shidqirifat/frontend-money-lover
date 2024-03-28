@@ -1,6 +1,7 @@
 import FormRegister from "@/components/auth/FormRegister";
 import { Logo } from "@/components/ui/logo";
 import NotAuthLayout from "@/layouts/NotAuthLayout";
+import ROUTES from "@/lib/route";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -22,7 +23,7 @@ export default function RegisterPage() {
           <h3 className="text-slate-700 text-sm leading-5 font-normal">
             Have an account?{" "}
             <Link
-              href="/login"
+              href={ROUTES.LOGIN()}
               className="underline underline-offset-2 text-sky-500"
             >
               Login
