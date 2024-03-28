@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 export function Logo() {
   return (
-    <h1 className="text-lg leading-6 drop-shadow-lg">
+    <Link href="/" className="text-xl leading-6 drop-shadow-lg w-40">
       <span className="text-green-500 font-bold">Money</span>
       <span className="text-orange-500 font-semibold">Lover 💖</span>
-    </h1>
+    </Link>
   );
 }

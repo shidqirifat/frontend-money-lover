@@ -30,7 +30,7 @@ const AuthProfile = () => {
         {authUserQuery.data?.data.email}
       </h4>
       <Link
-        href="/profile"
+        href="/settings/profile"
         className="text-sky-600 underline underline-offset-2 font-normal text-xs leading-4 flex items-center"
       >
         Edit account
