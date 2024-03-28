@@ -7,6 +7,5 @@ export default function useWallet() {
     queryFn: getSummaryWalletFn,
     staleTime: 200,
   });
-
   return { summaryWalletQuery };
 }

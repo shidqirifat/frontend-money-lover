@@ -35,7 +35,8 @@ export default function ModalDeleteTransaction() {
           type="button"
           variant="outline"
           onClick={toggleOpen}
-          className="w-full border-red-500 text-red-500 hover:bg-red-100 hover:text-red-500"
+          className="w-full"
+          color="red"
         >
           Delete This Transaction
         </Button>

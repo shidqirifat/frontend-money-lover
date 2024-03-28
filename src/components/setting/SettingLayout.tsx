@@ -21,7 +21,7 @@ export default function SettingLayout({ children }: SettingLayoutProps) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-[1fr_2fr] bg-white rounded-md shadow-md">
+      <div className="grid grid-cols-[1fr_2fr] bg-white rounded-md shadow-md pb-8">
         <SettingNavigations />
         <div className="p-12 pt-8">{children}</div>
       </div>

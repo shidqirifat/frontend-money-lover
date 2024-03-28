@@ -30,6 +30,7 @@ const buttonVariants = cva(
       color: {
         default: "",
         green: "bg-green-500 hover:bg-green-600",
+        red: "border-red-500 text-red-500 hover:bg-red-100 hover:text-red-500",
       },
     },
     defaultVariants: {
@@ -43,7 +44,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  color?: "green";
+  color?: "green" | "red";
   asChild?: boolean;
 }
 
