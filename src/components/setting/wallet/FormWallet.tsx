@@ -36,6 +36,7 @@ export default function FormWallet({
 
   const onSubmit = (form: TFormWallet) => {
     if (type === "add") mutation?.mutate(form);
+    else mutation?.mutate({ payload: form, id: initialForm?.id });
   };
 
   useEffect(() => {
@@ -98,7 +99,11 @@ export default function FormWallet({
           </Button>
         ) : (
           <div className="space-y-2">
-            <Button color="green" className="w-full">
+            <Button
+              color="green"
+              className="w-full"
+              disabled={mutation.isPending}
+            >
               Submit Edit Wallet
             </Button>
             <ModalDeleteWallet />
