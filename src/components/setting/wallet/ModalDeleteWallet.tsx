@@ -10,23 +10,23 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import useTransaction from "@/queries/useTransaction";
+import useWallet from "@/queries/useWallet";
 import useModalWallet from "@/stores/modalWallet";
 import { useEffect, useState } from "react";
 
 export default function ModalDeleteWallet() {
   const [open, setOpen] = useState(false);
-  const { deleteTransactionMutation } = useTransaction();
-  const { clearWallet } = useModalWallet();
+  const { deleteWalletMutation } = useWallet();
+  const { wallet, clearWallet } = useModalWallet();
 
   const toggleOpen = () => setOpen((prev) => !prev);
 
   useEffect(() => {
-    if (deleteTransactionMutation.isSuccess) {
+    if (deleteWalletMutation.isSuccess) {
       toggleOpen();
       clearWallet();
     }
-  }, [deleteTransactionMutation.isSuccess]);
+  }, [deleteWalletMutation.isSuccess]);
 
   return (
     <AlertDialog open={open}>
@@ -51,8 +51,17 @@ export default function ModalDeleteWallet() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={toggleOpen}>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">
+          <AlertDialogCancel
+            onClick={toggleOpen}
+            disabled={deleteWalletMutation.isPending}
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            variant="destructive"
+            disabled={deleteWalletMutation.isPending}
+            onClick={() => deleteWalletMutation.mutate(wallet?.id as number)}
+          >
             Delete Anyway
           </AlertDialogAction>
         </AlertDialogFooter>

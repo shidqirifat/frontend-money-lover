@@ -43,3 +43,7 @@ export const editWalletFn = async ({
 
   return response.data.data;
 };
+
+export const deleteWalletFn = async (id: number) => {
+  await http.delete(`/wallets/${id}`, getAuthConfig());
+};

@@ -1,5 +1,6 @@
 import {
   createWalletFn,
+  deleteWalletFn,
   editWalletFn,
   getSummaryWalletFn,
 } from "@/services/wallet.service";
@@ -32,5 +33,17 @@ export default function useWallet() {
     },
   });
 
-  return { summaryWalletQuery, createWalletMutation, editWalletMutation };
+  const deleteWalletMutation = useMutation({
+    mutationFn: deleteWalletFn,
+    onSuccess: () => {
+      successMutationHandler("Successfully delete wallet");
+    },
+  });
+
+  return {
+    summaryWalletQuery,
+    createWalletMutation,
+    editWalletMutation,
+    deleteWalletMutation,
+  };
 }
