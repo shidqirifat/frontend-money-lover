@@ -2,6 +2,7 @@ import { formatCurrency } from "@/lib/currency";
 import { Toggle } from "@/components/ui/toggle";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 type ToggleCurrencyProps = { balance: number };
 type ToggleEyeIconProps = { hide: boolean };
@@ -19,7 +20,12 @@ export default function ToggleCurrency({ balance }: ToggleCurrencyProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <h2 className="font-bold text-base text-green-500 leading-5">
+      <h2
+        className={cn("font-bold text-base leading-5", {
+          "text-green-500": balance >= 0,
+          "text-red-500": balance < 0,
+        })}
+      >
         {hideBalance ? `Rp ${"*".repeat(10)}` : formatCurrency(balance)}
       </h2>
       <Toggle
