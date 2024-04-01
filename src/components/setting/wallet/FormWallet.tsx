@@ -14,13 +14,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ModalDeleteWallet from "./ModalDeleteWallet";
+import { UseMutationResult } from "@tanstack/react-query";
 
 type FormWalletProps = {
   initialForm?: WalletResponse | null;
   type: "add" | "edit";
+  mutation: UseMutationResult;
 };
 
-export default function FormWallet({ initialForm, type }: FormWalletProps) {
+export default function FormWallet({
+  initialForm,
+  type,
+  mutation,
+}: FormWalletProps) {
   const form = useForm<TFormWallet>({
     resolver: zodResolver(formWalletSchema),
     defaultValues: {
@@ -29,7 +35,7 @@ export default function FormWallet({ initialForm, type }: FormWalletProps) {
   });
 
   const onSubmit = (form: TFormWallet) => {
-    console.log(form);
+    if (type === "add") mutation?.mutate(form);
   };
 
   useEffect(() => {
@@ -83,7 +89,11 @@ export default function FormWallet({ initialForm, type }: FormWalletProps) {
         />
 
         {type === "add" ? (
-          <Button color="green" className="w-full">
+          <Button
+            color="green"
+            className="w-full"
+            disabled={mutation.isPending}
+          >
             Submit Add Wallet
           </Button>
         ) : (

@@ -6,16 +6,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormWallet from "./FormWallet";
 import { Plus } from "lucide-react";
+import useWallet from "@/queries/useWallet";
+import { UseMutationResult } from "@tanstack/react-query";
 
 export default function ModalAddWallet() {
   const [openModal, setOpenModal] = useState(false);
+  const { createWalletMutation } = useWallet();
 
   const toggleModal = () => {
+    if (createWalletMutation.isPending) return;
+
     setOpenModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (createWalletMutation.isSuccess) toggleModal();
+  }, [createWalletMutation.isSuccess]);
 
   return (
     <Dialog open={openModal} onOpenChange={toggleModal}>
@@ -29,7 +38,10 @@ export default function ModalAddWallet() {
           <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
 
-        <FormWallet type="add" />
+        <FormWallet
+          type="add"
+          mutation={createWalletMutation as UseMutationResult}
+        />
       </DialogContent>
     </Dialog>
   );

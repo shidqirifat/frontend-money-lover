@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { z } from "zod";
 import { toOption } from "./datalist";
-import { formatNominal } from "./currency";
+import { formatNominal, formatNumber } from "./currency";
 
 type Entity = {
   id: number;
@@ -132,7 +132,7 @@ export const generatePayloadTransaction = (
   form: TFormTransaction
 ): PayloadTransaction => {
   return {
-    amount: Number(form.amount.replace(/[,.]/g, "")),
+    amount: formatNumber(form.amount),
     description: form.description,
     date: form.date,
     categoryId: form.category.value,

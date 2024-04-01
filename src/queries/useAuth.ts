@@ -20,6 +20,7 @@ export default function useAuth() {
     queryFn: getAuthUserFn,
     retry: false,
     enabled: false,
+    staleTime: 200,
   });
 
   const handleSuccessAuth = ({ data }: AuthResponse) => {

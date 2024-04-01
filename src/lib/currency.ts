@@ -11,3 +11,7 @@ export const formatCurrency = (value: number, absolute = false) => {
   if (value < 0 && !absolute) return `-${formattedCurrency}`;
   return formattedCurrency;
 };
+
+export const formatNumber = (nominal: string) => {
+  return Number(nominal.replace(/[,.]/g, ""))
+} 
