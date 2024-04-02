@@ -16,6 +16,7 @@ export default function useCategory() {
     return data.map((category) => ({
       id: category.id,
       name: category.name,
+      masterCategoryTransaction: category.masterCategoryTransaction,
     }));
   }, [data]);
 

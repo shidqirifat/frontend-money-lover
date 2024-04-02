@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Combobox } from "@/components/ui/combobox";
 import { toDatalist, toOption } from "@/lib/datalist";
-import { formatNominal } from "@/lib/currency";
+import { formatNominal, formatNumber } from "@/lib/currency";
 import { useEffect, useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,6 +18,7 @@ import {
   TFormTransaction,
   Transaction,
   TypeForm,
+  TypeTransaction,
   formTransactionSchema,
   generateDefaultValueFormTransaction,
   generateInitialValueFormTransaction,
@@ -55,7 +56,11 @@ export default function FormTransaction({
     else mutation?.mutate({ payload: form, id: initialForm?.id as number });
   };
 
-  const [category] = form.watch(["category"]);
+  const [category, wallet, amount] = form.watch([
+    "category",
+    "wallet",
+    "amount",
+  ]);
 
   const assignInitFormValue = () => {
     if (!initialForm) {
@@ -71,6 +76,23 @@ export default function FormTransaction({
     () => getSubCategoriesByCategory(category, subCategoriesData),
     [category, subCategoriesData]
   );
+
+  const isAmountGreaterThanBalance = useMemo(() => {
+    const selectedCategory = categories.find(
+      (item) => item.id === category?.value
+    );
+    if (!selectedCategory) return false;
+
+    const wallets = summaryWalletQuery.data?.wallets;
+    const selectedWallet = wallets?.find((item) => item.id === wallet?.value);
+
+    if (!selectedWallet) return false;
+
+    return (
+      formatNumber(amount) > selectedWallet.balance &&
+      selectedCategory.masterCategoryTransaction.id === TypeTransaction.EXPENSE
+    );
+  }, [categories, category, wallet, summaryWalletQuery, amount]);
 
   useEffect(() => {
     if (category) form.clearErrors("category");
@@ -226,6 +248,9 @@ export default function FormTransaction({
             assignInitFormValue();
             form.clearErrors();
           }}
+          onTrigger={form.handleSubmit}
+          onSubmit={form.handleSubmit(onSubmit)}
+          directSubmit={!isAmountGreaterThanBalance}
         />
       </form>
     </Form>
