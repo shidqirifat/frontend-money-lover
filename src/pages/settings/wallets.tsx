@@ -32,7 +32,7 @@ const WalletCard = ({ name, balance, onClick }: WalletCardProps) => {
   );
 };
 
-export default function Wallet() {
+export default function Wallets() {
   const { setWallet } = useModalWallet();
   const { summaryWalletQuery } = useWallet();
 
@@ -41,7 +41,7 @@ export default function Wallet() {
       <ModalUpdateWallet />
 
       <SettingLayout>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center h-9">
           <h1 className="text-3xl text-green-500 font-bold leading-7">
             My Wallets
           </h1>

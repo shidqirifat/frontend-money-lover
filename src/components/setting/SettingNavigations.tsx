@@ -39,7 +39,7 @@ const Navigation = ({ children, icon, url }: NavigationProps) => {
 
 export default function SettingNavigations() {
   return (
-    <div className="p-12 pt-8 border-r border-slate-100">
+    <div className="p-12 pr-6 pt-8 border-r border-slate-100">
       <div className="flex items-center gap-2">
         <Settings width={28} height={28} />
         <h1 className="text-slate-600 font-semibold text-2xl leading-6">

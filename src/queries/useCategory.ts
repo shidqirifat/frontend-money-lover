@@ -20,5 +20,5 @@ export default function useCategory() {
     }));
   }, [data]);
 
-  return { data, categories };
+  return { subCategoriesData: data, categories };
 }

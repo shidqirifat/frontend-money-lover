@@ -46,7 +46,7 @@ export default function FormTransaction({
   mutation,
 }: FormTransactionProps) {
   const { summaryWalletQuery } = useWallet();
-  const { data: subCategoriesData, categories } = useCategory();
+  const { subCategoriesData, categories } = useCategory();
   const form = useForm<TFormTransaction>({
     resolver: zodResolver(formTransactionSchema),
   });

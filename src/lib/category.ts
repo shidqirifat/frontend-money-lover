@@ -29,3 +29,16 @@ export const getSubCategoriesByCategory = (
 
   return toDatalist(subCategoriesSelected);
 };
+
+export type TypeTransactionData = Array<{
+  id: number;
+  name: string;
+  categories: Array<{
+    id: number;
+    name: string;
+    subCategories: Array<{
+      id: number;
+      name: string;
+    }>;
+  }>;
+}>;
